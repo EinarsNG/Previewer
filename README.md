@@ -3,7 +3,7 @@ Creates preview image from a video
 
 # Prerequisites
 * Rust build toolchain (on the build machine)
-* FFmpeg
+* FFmpeg (mingw-w64-x86_64-ffmpeg package through MSYS2 on Windows)
 
 # How to use
 ```Usage:
