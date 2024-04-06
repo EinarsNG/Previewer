@@ -1,6 +1,10 @@
 use ffmpeg_next::frame::Video;
 
-pub fn combine_images(frames: Vec<Video>, border_size: usize, scaling_factor: f32) -> image::DynamicImage {
+pub fn combine_images(
+    frames: Vec<Video>,
+    border_size: usize,
+    scaling_factor: f32,
+) -> image::DynamicImage {
     if frames.len() == 0 {
         return image::DynamicImage::new_rgb8(0, 0);
     }

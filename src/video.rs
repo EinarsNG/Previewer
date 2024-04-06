@@ -43,18 +43,20 @@ pub fn extract_preview_frames(
     frames_to_use.pop_back();
 
     let mut frames: Vec<Video> = Vec::new();
-    let mut frame_index = 0;
+    //let mut frame_index = 0;
     let mut receive_and_process_decoded_frames =
-        |decoder: &mut ffmpeg_next::decoder::Video| -> Result<(), ffmpeg_next::Error> {
+        |decoder: &mut ffmpeg_next::decoder::Video| -> Result<bool, ffmpeg_next::Error> {
             let mut decoded = Video::empty();
+            let mut iterations = 0;
             while decoder.receive_frame(&mut decoded).is_ok() {
+                iterations += 1;
                 let mut rgb_frame = Video::empty();
                 scaler.run(&decoded, &mut rgb_frame)?;
                 //save_file_jpg(&rgb_frame, frame_index);
+                //frame_index += 1;
                 frames.push(rgb_frame);
-                frame_index += 1;
             }
-            Ok(())
+            Ok(iterations == 0)
         };
 
     loop {
@@ -72,7 +74,11 @@ pub fn extract_preview_frames(
                     continue;
                 }
                 decoder.send_packet(&packet)?;
-                receive_and_process_decoded_frames(&mut decoder)?;
+                let should_continue = receive_and_process_decoded_frames(&mut decoder)?;
+                // if we don't decode a frame after the first packet we need another one
+                if should_continue {
+                    continue;
+                }
             }
             break;
         }
