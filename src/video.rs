@@ -14,7 +14,7 @@ pub fn extract_preview_frames(
 ) -> Result<Vec<Video>, Box<dyn Error>> {
     let (video_frames, frame_rate) = probe_video(&video_path)?;
 
-    let mut ictx = format::input(&video_path).unwrap();
+    let mut ictx = format::input(&video_path)?;
     let input = ictx
         .streams()
         .best(Type::Video)
@@ -88,7 +88,7 @@ pub fn extract_preview_frames(
 }
 
 #[allow(unused)]
-fn save_file_jpg(frame: &Video, index: usize) -> std::result::Result<(), std::io::Error> {
+fn save_file_jpg(frame: &Video, index: usize) -> Result<(), Box<dyn Error>> {
     let mut img = image::ImageBuffer::new(frame.width(), frame.height());
     let data = frame.data(0);
     let stride = frame.stride(0);
@@ -102,7 +102,7 @@ fn save_file_jpg(frame: &Video, index: usize) -> std::result::Result<(), std::io
             data[yy * stride + xx + 2],
         ])
     }
-    img.save(format!("out/frame{}.jpg", index)).unwrap();
+    img.save(format!("out/frame{}.jpg", index))?;
 
     Ok(())
 }
@@ -111,7 +111,7 @@ fn probe_video(video_path: &String) -> Result<(u32, f32), ffmpeg_next::Error> {
     let mut video_frames = 0u32;
     let mut frame_rate = 0f32;
     {
-        let mut probe = format::input(&video_path).unwrap();
+        let mut probe = format::input(&video_path)?;
         let input = probe
             .streams()
             .best(Type::Video)
