@@ -11,7 +11,7 @@ pub fn combine_images(
 
     // case when sqrt from image count is not a whole number
     let image_count_sqrt = f32::sqrt(frames.len() as f32);
-    let image_count_x = image_count_sqrt.floor() as u32;
+    let image_count_x = image_count_sqrt.round() as u32;
     let image_count_y = image_count_sqrt.ceil() as u32;
 
     let total_width = image_count_x as u32 * frames[0].width();
