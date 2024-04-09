@@ -56,6 +56,9 @@ pub fn extract_preview_frames(
                 //frame_index += 1;
                 frames.push(rgb_frame);
             }
+            if iterations > 0 {
+                decoder.flush();
+            }
             Ok(iterations == 0)
         };
 
