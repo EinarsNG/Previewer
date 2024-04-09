@@ -69,7 +69,7 @@ pub fn extract_preview_frames(
         } as f32
             / frame_rate) as i64;
         framepos = framepos.rescale((1, 1), rescale::TIME_BASE);
-        ictx.seek(framepos, framepos - 5..framepos + 5)?;
+        ictx.seek(framepos, framepos - 10..framepos)?;
         loop {
             // in case stream is not video we loop until it is
             if let Some((stream, packet)) = ictx.packets().next() {
