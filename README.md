@@ -35,4 +35,4 @@ previewer [opts]
 Generating preview for this video [Cyberpunk 2077: Phantom Liberty — Official Trailer](https://www.youtube.com/watch?v=reABCMNGM3w) with these arguments: 
 `previewer -i video.webm -s 0.1` produces this image:
 ![Preview image](images/preview.jpg)
-Note that some black frames are expected because this video has transitions.
+Note that some black frames are expected because this video has transitions. Also having this video reencoded to mp4 format can cause it to use different frames.
