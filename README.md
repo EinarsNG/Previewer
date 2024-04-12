@@ -21,7 +21,7 @@ Optional arguments:
 ```
 
 # How to install
-Make sure your `.cargo/bin` folder is added to your PATH.
+Make sure your `~/.cargo/bin` folder is added to your PATH.
 
 `cargo install --path .`
 then run using
